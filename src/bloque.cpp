@@ -10,6 +10,16 @@ Bloque::Bloque(){
     }
 }
 
+Bloque::Bloque(const vector<unsigned char> &datosBloque) {
+    valido = true;
+    tag = 0;
+    lru = 0;
+    datos.resize(16);
+    for (int i = 0; i < 16; ++i) {
+        datos[i] = datosBloque[i];
+    }
+}
+
 bool Bloque::esValido() const {
     return valido;
 }
