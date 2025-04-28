@@ -20,6 +20,7 @@ void RAM::escribirByte(int direccion, unsigned char dato) {
     memoria[direccion] = dato;
 }
 
+/*
 vector<unsigned char> RAM::leerBloque(int direccionBase) const {
     vector<unsigned char> bloque(16);
     for (int i = 0; i < 16; ++i) {
@@ -33,3 +34,4 @@ void RAM::escribirBloque(int direccionBase, const vector<unsigned char>& bloque)
         memoria[direccionBase + i] = bloque[i];
     }
 }
+*/
