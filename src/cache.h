@@ -16,7 +16,7 @@ class Cache {
         int getHits() const;
         int getMisses() const;
 
-        pair<bool, pair<int, int>> isHit(int); // Verifica si hay un hit en la cache, devuelve un par con el index y la vía
+        pair<bool, pair<int, int>> isHit(int tag); // Verifica si hay un hit en la cache, devuelve un par con el index y la vía
         unsigned char getValue(int index, int via, int offset); 
         void setValue(int index, int via, int offset, unsigned char valor); 
 };
