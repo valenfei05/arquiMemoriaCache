@@ -1,26 +1,10 @@
 #include "cache.h"
 
-Cache::Cache() : cantHits(0), cantMiss(0) {
+Cache::Cache() {
     conjuntos.resize(8); 
     for (int i = 0; i < 8; ++i) {
         conjuntos[i] = Conjunto(); 
     }
-}
-
-void Cache::increaseHits() {
-    cantHits++; 
-}
-
-void Cache::increaseMisses() {
-    cantMiss++; 
-}
-
-int Cache::getHits() const {
-    return cantHits; 
-}
-
-int Cache::getMisses() const {
-    return cantMiss; 
 }
 
 pair<bool, pair<int, int>> Cache::isHit(int tag) {
@@ -33,13 +17,8 @@ pair<bool, pair<int, int>> Cache::isHit(int tag) {
             answer.first = true; 
             answer.second.first = i; // index
             answer.second.second = setHit.second; // via
-            increaseHits();
         }
         i++;
-    }
-
-    if (!answer.first) {
-        increaseMisses();
     }
     return answer;
 }
