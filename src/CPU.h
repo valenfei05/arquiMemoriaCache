@@ -4,16 +4,17 @@
 #include "ram.h"
 #include "cache.h"
 #include "controlador.h"
+#include <string>
+
+using namespace std;
 
 class CPU {
     private: 
-        RAM ram; 
-        Cache cache; 
         Controlador controlador;
     public:
         CPU();
-        void ejecutarInstruccionesAleatorias(int numInstrucciones);
         pair<string, pair<int, unsigned char>> generarInstruccionAleatoria();
+        void ejecutarInstruccionesAleatorias(int numInstrucciones);
 };
 
 #endif
