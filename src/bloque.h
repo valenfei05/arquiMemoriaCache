@@ -32,5 +32,4 @@ class Bloque {
 
 };
 
-
 #endif 

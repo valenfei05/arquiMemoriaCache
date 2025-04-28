@@ -1,6 +1,5 @@
 #include "Bloque.h"
 
-
 Bloque::Bloque(){
     valido = false;
     tag = 0;
@@ -10,7 +9,6 @@ Bloque::Bloque(){
         datos[i] = 0;
     }
 }
-
 
 bool Bloque::esValido() const {
     return valido;
