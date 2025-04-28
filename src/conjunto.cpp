@@ -1,7 +1,10 @@
 #include "conjunto.h"
 
 Conjunto::Conjunto() { 
-    vias.resize(4); 
+    vias.resize(4);
+    for (int i = 0; i < 4; ++i) {
+        vias[i] = Bloque(); 
+    } 
     numVias = 0; 
 }
 
@@ -27,6 +30,7 @@ pair<bool, int> Conjunto::isHit(int tag) {
             increaseLRU(i);
             vias[i].setLRU(0); 
         }
+        i++;
     }
     return answer; 
 }

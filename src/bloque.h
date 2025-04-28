@@ -28,6 +28,7 @@ class Bloque {
         unsigned char leerDato(int offset) const;
         void escribirDato(int offset, unsigned char valor);
 
+        // No entiendo como la funcion inicializarDatos, si no se supone que la cache inicie con ningun dato
         void inicializarDatos(const vector<unsigned char>& datosBloque);
 
 };
