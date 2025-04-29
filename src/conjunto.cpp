@@ -27,7 +27,7 @@ pair<bool, int> Conjunto::isHit(int tag) {
         if (vias[i].esValido() && vias[i].getTag() == tag) {
             answer.first = true;
             answer.second = i; 
-            increaseLRU(i);
+            increaseLRU();
             vias[i].setLRU(0); 
         }
         i++;

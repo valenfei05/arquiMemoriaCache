@@ -19,19 +19,3 @@ unsigned char RAM::leerByte(int direccion) const {
 void RAM::escribirByte(int direccion, unsigned char dato) {
     memoria[direccion] = dato;
 }
-
-/*
-vector<unsigned char> RAM::leerBloque(int direccionBase) const {
-    vector<unsigned char> bloque(16);
-    for (int i = 0; i < 16; ++i) {
-        bloque[i] = memoria[direccionBase + i];
-    }
-    return bloque;
-}
-
-void RAM::escribirBloque(int direccionBase, const vector<unsigned char>& bloque) {
-    for (int i = 0; i < 16; ++i) {
-        memoria[direccionBase + i] = bloque[i];
-    }
-}
-*/

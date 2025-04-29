@@ -12,7 +12,8 @@ using namespace std;
 int main(){
     CPU cpu;
     int instrucciones;
-    cin >> "Digite la cantidad de instrucciones a ejecutar: " >> instrucciones;
+    cout << "Digite la cantidad de instrucciones a ejecutar: ";
+    cin >> instrucciones;
     cpu.ejecutarInstruccionesAleatorias(instrucciones);
     cout << "Fin de la simulacion" << endl;
     return 0;

@@ -19,6 +19,6 @@ class Conjunto {
         pair<bool, int> isHit(int tag); 
         unsigned char getValue(int via, int offset); 
         void setValue(int via, int offset, unsigned char valor); 
-}
+};
 
 #endif 
