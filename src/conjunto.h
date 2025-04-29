@@ -16,9 +16,11 @@ class Conjunto {
 
         void increaseLRU();
         int getNumVias() const;
+        int getWayLRU() const;
         pair<bool, int> isHit(int tag); 
         unsigned char getValue(int via, int offset); 
         void setValue(int via, int offset, unsigned char valor); 
+        void addBloque(int tag, int via, Bloque &bloque);
 }
 
 #endif 

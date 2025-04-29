@@ -15,6 +15,7 @@ class Bloque {
 
     public:
         Bloque();
+        Bloque(const vector<unsigned char> &datosBloque);
 
         bool esValido() const;
         void setValido(bool v);
