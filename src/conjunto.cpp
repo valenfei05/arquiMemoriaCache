@@ -42,3 +42,23 @@ unsigned char Conjunto::getValue(int via, int offset) {
 void Conjunto::setValue(int via, int offset, unsigned char valor) {
     vias[via].escribirDato(offset, valor); 
 }
+
+void Conjunto::addBloque(int tag, int via, Bloque &bloque) {
+    vias[via].setTag(tag); 
+    vias[via].setValido(true); 
+    vias[via].setLRU(0); 
+    vias[via] = bloque; 
+    numVias++;
+}
+
+int Conjunto::getWayLRU() const {
+    int i, answer = 0;
+    int maxLRU = vias[0].getLRU();
+    for (i = 1; i < numVias; i++) {
+        if (vias[i].getLRU() > maxLRU) {
+            maxLRU = vias[i].getLRU();
+            answer = i; 
+        }
+    }
+    return answer;
+}

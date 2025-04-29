@@ -5,7 +5,7 @@ Integrantes: Valentina Feijoo y Daniel Posada.
 */
 
 #include <iostream>
-#include "CPU.h"
+#include "./src/CPU.h"
 
 using namespace std;
 

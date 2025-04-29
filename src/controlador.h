@@ -18,12 +18,13 @@ class Controlador {
     public:
         Controlador(); 
         
-        pair<bool, pair<int, int>> isHit(int tag);
+        pair<bool, int> isHit(int tag, int index);
         pair<int, pair<int, int>> splitAddress(int direccion);
 
         unsigned char getRAMValue(int direccion);
         void setRAMValue(int direccion, unsigned char valor);
         unsigned char getCacheValue(int index, int via, int offset);
+        int selectVia(int index);
         void setCacheValue(int index, int via, int offset, unsigned char valor);
 
         void increaseHits();
