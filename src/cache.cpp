@@ -7,6 +7,13 @@ Cache::Cache() {
     }
 }
 
+
+int Cache::getNumeroConjuntos() const {
+    return conjuntos.size();
+}
+
+
+
 pair<bool, int> Cache::isHit(int tag, int index) {
     pair<bool, int> answer = conjuntos[index].isHit(tag); 
     return answer;

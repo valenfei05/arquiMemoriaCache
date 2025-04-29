@@ -116,6 +116,7 @@ unsigned char Controlador::procesarEscritura(int direccion, unsigned char dato) 
 
     increaseTotalAccesos();
 
+
     if (esHit) {
         increaseHits();
         setCacheValue(index, via, offset, dato);
@@ -134,9 +135,7 @@ unsigned char Controlador::procesarEscritura(int direccion, unsigned char dato) 
     datosBloque[offset] = dato;
 
     via = selectVia(index);
-
     cache.addBloque(tag, index, via, datosBloque);
-
     setRAMValue(direccion, dato);
 
     return dato;

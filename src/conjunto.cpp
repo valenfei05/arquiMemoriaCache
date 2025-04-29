@@ -1,4 +1,5 @@
 #include "conjunto.h"
+#include <iostream>
 
 Conjunto::Conjunto() { 
     vias.resize(4);
@@ -36,20 +37,34 @@ pair<bool, int> Conjunto::isHit(int tag) {
 }
 
 unsigned char Conjunto::getValue(int via, int offset) {
+    /* if (via < 0 || via >= 4) {
+        cout << "[ERROR] vía fuera de rango: " << via << endl;
+        break
+    } */
+    
     return vias[via].leerDato(offset); 
 }
 
 void Conjunto::setValue(int via, int offset, unsigned char valor) {
+    /* if (via < 0 || via >= 4) {
+        cout << "[ERROR] vía fuera de rango: " << via << endl;
+        break
+    } */
+    
     vias[via].escribirDato(offset, valor); 
 }
 
 void Conjunto::addBloque(int tag, int via, Bloque &bloque) {
-    vias[via].setTag(tag); 
-    vias[via].setValido(true); 
-    vias[via].setLRU(0); 
-    vias[via] = bloque; 
-    numVias++;
+    bloque.setTag(tag);
+    bloque.setValido(true);
+    bloque.setLRU(0);
+    vias[via] = bloque;
+
+    if (via >= numVias) {
+        numVias = via + 1;
+    }
 }
+
 
 int Conjunto::getWayLRU() const {
     int i, answer = 0;

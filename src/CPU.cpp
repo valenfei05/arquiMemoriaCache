@@ -32,6 +32,6 @@ void CPU::ejecutarInstruccionesAleatorias(int numInstrucciones) {
             cout << "Escritura en la direccion " << direccion << ": " << static_cast<int>(datoWrite) << endl;
         }
 
-        controlador.mostrarEstadisticas();
     }
+    controlador.mostrarEstadisticas();
 }
