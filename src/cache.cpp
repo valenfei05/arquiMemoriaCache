@@ -12,6 +12,9 @@ int Cache::getNumeroConjuntos() const {
     return conjuntos.size();
 }
 
+const Bloque& Cache::getBloque(int index, int via) const {
+    return conjuntos[index].getBloque(via);
+}
 
 
 pair<bool, int> Cache::isHit(int tag, int index) {

@@ -1,2 +1,6 @@
-TotalAccesos,Hits,Misses,TasaFallos
-15,1,14,93.3333
+Acceso,Misses,TasaFallos
+10,8,80
+20,16,80
+30,26,86.6667
+40,36,90
+50,42,84

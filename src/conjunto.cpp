@@ -21,6 +21,11 @@ int Conjunto::getNumVias() const {
     return numVias; 
 }
 
+const Bloque& Conjunto::getBloque(int via) const {
+    return vias[via];
+}
+
+
 pair<bool, int> Conjunto::isHit(int tag) {
     pair<bool, int> answer = {false, -1};
     int i = 0;

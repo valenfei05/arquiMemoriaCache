@@ -1,21 +1,29 @@
 import pandas as pd
-import matplotlib
 import matplotlib.pyplot as plt
 
-matplotlib.style.use('bmh')
 df = pd.read_csv("resultados.csv")
 
+plt.style.use("bmh")
+plt.figure(figsize=(10, 5))
 
-plt.figure()
-plt.bar(["Hits", "Misses"], [df["Hits"][0], df["Misses"][0]], color=["#3E92CC", "#FA4659"])
-plt.title("Resumen de Accesos a la Caché")
-plt.ylabel("Cantidad")
-plt.grid(axis='y')
+plt.plot(df["Acceso"], df["TasaFallos"], color="#1f77b4", marker="o", linewidth=2, label="Tasa de Fallos (%)")
 
-tasa = df["TasaFallos"][0]
-plt.text(0.5, max(df["Hits"][0], df["Misses"][0]) * 0.9,
-         f"Tasa de fallos: {tasa:.2f}%", ha="center", fontsize=12)
+ultimo_acceso = df["Acceso"].iloc[-1]
+tasa_final = df["TasaFallos"].iloc[-1]
+plt.annotate(f"{tasa_final:.1f}%",
+             (ultimo_acceso, tasa_final),
+             textcoords="offset points",
+             xytext=(-15, 10),
+             ha='center',
+             fontsize=10,
+             color="black",
+             bbox=dict(boxstyle="round,pad=0.3", fc="white", ec="black", lw=1))
 
+plt.title("Tasa de Fallos de Caché (Miss Rate)")
+plt.xlabel("Total de Accesos")
+plt.ylabel("Misses (%)")
+plt.ylim(0, 100)
+plt.grid(True)
+plt.legend()
 plt.tight_layout()
 plt.show()
-

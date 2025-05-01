@@ -14,7 +14,10 @@ class Controlador {
         int hits;
         int Miss;        
         int totalAccesos;    
-    
+
+
+        bool ultimoFueHit;
+
     public:
         Controlador(); 
         
@@ -39,6 +42,8 @@ class Controlador {
 
         void mostrarEstadisticas() const; 
 
+
+        bool fueUltimoHit() const;
     };
 
 

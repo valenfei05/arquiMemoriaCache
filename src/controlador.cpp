@@ -4,7 +4,7 @@
 #include <vector>
 #include <fstream>
 
-Controlador::Controlador() : hits(0), Miss(0), totalAccesos(0) {
+Controlador::Controlador() : hits(0), Miss(0), totalAccesos(0), ultimoFueHit(false) {
     ram = RAM();
     cache = Cache(); 
 }
@@ -14,11 +14,8 @@ pair<bool, int> Controlador::isHit(int tag, int index) {
 }
 
 pair<int, pair<int, int>> Controlador::splitAddress(int direccion) {
-    // Offset = bits [3:0] → máscara 0xF (0000 1111)
     int offset = direccion & 0xF;
-    // Index = bits [6:4] → desplazar 4, máscara 0x7 (0000 0111)
     int index  = (direccion >> 4) & 0x7;
-    // Tag = bits [10:7] → desplazar 7, máscara 0xF (0000 1111)
     int tag    = (direccion >> 7) & 0xF;
     return {tag, {index, offset}}; 
 }
@@ -75,9 +72,9 @@ int Controlador::selectVia(int index) {
 
 unsigned char Controlador::procesarLectura(int direccion) {
     pair<int, pair<int, int>> dir = splitAddress(direccion);
-    pair<int, int> indexOffset = dir.second;
     int tag = dir.first;
-    int index = indexOffset.first, offset = indexOffset.second;
+    int index = dir.second.first;
+    int offset = dir.second.second;
 
     pair<bool, int> infoHit = isHit(tag, index);
     bool isHit = infoHit.first;
@@ -89,15 +86,16 @@ unsigned char Controlador::procesarLectura(int direccion) {
 
     if (isHit) {
         increaseHits();
-    } 
-    else {
+        ultimoFueHit = true;
+    } else {
         increaseMisses();
-        int i, direccionBaseBloque = direccion & ~0xF; 
-        for (i = 0; i < 16; ++i) {
-            datosBloque[i] = getRAMValue(direccionBaseBloque + i);
+        ultimoFueHit = false;
+        int base = direccion & ~0xF;
+        for (int i = 0; i < 16; ++i) {
+            datosBloque[i] = getRAMValue(base + i);
         }
         via = selectVia(index);
-        cache.addBloque(tag, index, via, datosBloque); 
+        cache.addBloque(tag, index, via, datosBloque);
     }
 
     answer = getCacheValue(index, via, offset);
@@ -116,15 +114,16 @@ unsigned char Controlador::procesarEscritura(int direccion, unsigned char dato) 
 
     increaseTotalAccesos();
 
-
     if (esHit) {
         increaseHits();
+        ultimoFueHit = true;
         setCacheValue(index, via, offset, dato);
-        setRAMValue(direccion, dato); // write-through
+        setRAMValue(direccion, dato); // Write-through
         return dato;
     }
 
     increaseMisses();
+    ultimoFueHit = false;
 
     vector<unsigned char> datosBloque(16, 0);
     int baseDireccion = direccion & ~0xF;
@@ -133,7 +132,6 @@ unsigned char Controlador::procesarEscritura(int direccion, unsigned char dato) 
     }
 
     datosBloque[offset] = dato;
-
     via = selectVia(index);
     cache.addBloque(tag, index, via, datosBloque);
     setRAMValue(direccion, dato);
@@ -141,24 +139,37 @@ unsigned char Controlador::procesarEscritura(int direccion, unsigned char dato) 
     return dato;
 }
 
-
 void Controlador::mostrarEstadisticas() const {
     double tasaFallos = (totalAccesos > 0) ? (static_cast<double>(Miss) / totalAccesos) * 100.0 : 0.0;
 
-    // Mostrar por consola
-    cout << "Total accesos: " << totalAccesos << endl;
+    cout << "\n=== Estadísticas ===" << endl;
+    cout << "Total de accesos: " << totalAccesos << endl;
     cout << "Hits: " << hits << endl;
     cout << "Misses: " << Miss << endl;
     cout << "Tasa de fallos: " << tasaFallos << "%" << endl;
 
-    // Guardar en CSV
-    ofstream archivo("resultados.csv");
-    if (archivo.is_open()) {
-        archivo << "TotalAccesos,Hits,Misses,TasaFallos\n";
-        archivo << totalAccesos << "," << hits << "," << Miss << "," << tasaFallos << "\n";
-        archivo.close();
-        cout << "Archivo resultados.csv generado correctamente." << endl;
-    } else {
-        cout << "Error al abrir el archivo para escribir resultados." << endl;
+    cout << "\n=== Estado actual de la Cache ===" << endl;
+
+    for (int i = 0; i < 8; ++i) {
+        cout << "Conjunto " << i << ":" << endl;
+        for (int j = 0; j < 4; ++j) {
+            const Bloque& bloque = cache.getBloque(i, j);
+            cout << "  Via " << j << ": ";
+            if (bloque.esValido()) {
+                cout << "Valido | Tag: " << bloque.getTag() << " | LRU: " << bloque.getLRU() << " | Datos: ";
+                for (int k = 0; k < 16; ++k) {
+                    cout << hex << static_cast<int>(bloque.leerDato(k)) << " ";
+                }
+                cout << dec;
+            } else {
+                cout << "Invalido";
+            }
+            cout << endl;
+        }
+        cout << endl;
     }
+}
+
+bool Controlador::fueUltimoHit() const {
+    return ultimoFueHit;
 }

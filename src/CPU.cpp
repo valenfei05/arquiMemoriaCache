@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <string>
+#include <fstream> 
 
 CPU::CPU(){
     controlador = Controlador();
@@ -15,8 +16,14 @@ pair<string, pair<int, unsigned char>> CPU::generarInstruccionAleatoria() {
     return {operacion, {direccion, dato}};
 }
 
+
 void CPU::ejecutarInstruccionesAleatorias(int numInstrucciones) {
-    unsigned char datoRead = 0; 
+    unsigned char datoRead = 0;
+
+    ofstream archivo("resultados.csv");
+    archivo << "Acceso,Misses,TasaFallos\n";
+
+
     for (int i = 0; i < numInstrucciones; i++) {
         pair<string, pair<int, unsigned char>> instruccion = generarInstruccionAleatoria();
         string operacion = instruccion.first;
@@ -26,12 +33,25 @@ void CPU::ejecutarInstruccionesAleatorias(int numInstrucciones) {
         if (operacion == "lectura") {
             datoRead = controlador.procesarLectura(direccion);
             cout << "Lectura de la direccion " << direccion << ": " << static_cast<int>(datoRead) << endl;
-        } 
-        else {
+        } else {
             controlador.procesarEscritura(direccion, datoWrite);
             cout << "Escritura en la direccion " << direccion << ": " << static_cast<int>(datoWrite) << endl;
         }
 
+        cout << " --> " << (controlador.fueUltimoHit() ? "HIT" : "MISS") << endl;
+        // Calcular tasa de fallos acumulada hasta el acceso actual
+        int total = controlador.getTotalAccesos();
+        int fallos = controlador.getMisses();
+        double tasaFallos = (total > 0) ? static_cast<double>(fallos) / total * 100.0 : 0.0;
+
+        // Registrar acceso y tasa en el CSV
+        if ((i + 1) % 10 == 0 || (i + 1) == numInstrucciones) {
+            float missRate = static_cast<float>(controlador.getMisses()) / controlador.getTotalAccesos();
+            archivo << (i + 1) << "," << controlador.getMisses() << "," << (missRate * 100.0f) << "\n";
+        }
+        
     }
+
+    archivo.close(); 
     controlador.mostrarEstadisticas();
 }

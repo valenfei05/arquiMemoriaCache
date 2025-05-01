@@ -19,3 +19,9 @@ unsigned char RAM::leerByte(int direccion) const {
 void RAM::escribirByte(int direccion, unsigned char dato) {
     memoria[direccion] = dato;
 }
+
+/* void RAM::imprimir () const {
+    for (int i = 0; i < memoria.size(); ++i) {
+        cout << "RAM[" << i << "] = " << static_cast<int>(memoria[i]) << endl;
+    }
+} */

@@ -21,6 +21,8 @@ class Conjunto {
         unsigned char getValue(int via, int offset); 
         void setValue(int via, int offset, unsigned char valor); 
         void addBloque(int tag, int via, Bloque &bloque);
+        const Bloque& getBloque(int via) const;
+
 };
 
 #endif 

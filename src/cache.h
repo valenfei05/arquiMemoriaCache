@@ -13,7 +13,7 @@ class Cache {
 
         int getWayLRU(int index); // Devuelve la vía menos recientemente usada
         int getNumVias(int index) const;
-        
+        const Bloque& getBloque(int index, int via) const;
         int getNumeroConjuntos() const;
         
         pair<bool, int>isHit(int tag, int index); // Verifica si hay un hit en la cache, devuelve un par con el index y la vía
