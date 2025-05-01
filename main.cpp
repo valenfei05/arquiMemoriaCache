@@ -17,5 +17,8 @@ int main(){
     cpu.ejecutarInstruccionesAleatorias(instrucciones);
    
     cout << "Fin de la simulacion" << endl;
+    cpu.guardarRAMFinal("ram_final.txt");
+
+
     return 0;
 }
