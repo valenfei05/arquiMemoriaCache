@@ -32,18 +32,6 @@ unsigned char RAM::leerByte(int direccion) const {
     return memoria[direccion];
 }
 
-void RAM::guardar() {
-    ofstream outfile("./ram_data.txt");
-    if (outfile.is_open()) {
-        for (int i = 0; i < 2048; ++i) {
-            outfile << memoria[i] << endl;
-        }
-        outfile.close();
-    } else {
-        cout << "[ERROR] No se pudo abrir el archivo para guardar los datos." << endl;
-    }
-}
-
 void RAM::escribirByte(int direccion, unsigned char dato) {
     memoria[direccion] = dato;
     guardar(); 

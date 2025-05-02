@@ -26,6 +26,7 @@ void CPU::ejecutarInstruccionesAleatorias(int numInstrucciones) {
 
 
     for (int i = 0; i < numInstrucciones; i++) {
+        cout << "Instruccion " << (i + 1) << ": " << endl;
         pair<string, pair<int, unsigned char>> instruccion = generarInstruccionAleatoria();
         string operacion = instruccion.first;
         int direccion = instruccion.second.first;
@@ -49,7 +50,7 @@ void CPU::ejecutarInstruccionesAleatorias(int numInstrucciones) {
         double tasaFallos = (total > 0) ? static_cast<double>(fallos) / total * 100.0 : 0.0;
 
         // Registrar acceso y tasa en el CSV
-        if ((i + 1) % 10 == 0 || (i + 1) == numInstrucciones) {
+        if ((i + 1) % 5 == 0 || (i + 1) == numInstrucciones) {
             float missRate = static_cast<float>(controlador.getMisses()) / controlador.getTotalAccesos();
             archivo << (i + 1) << "," << controlador.getMisses() << "," << (missRate * 100.0f) << "\n";
         }
