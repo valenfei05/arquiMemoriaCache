@@ -13,8 +13,11 @@ class RAM{
         RAM();
         unsigned char leerByte(int direccion) const;
         void escribirByte(int direccion, unsigned char dato);
-        
+        void guardar();
         //void imprimir() const;
+
+        void guardarFinal(const string& nombreArchivo) const;
+
 };  
 
 #endif

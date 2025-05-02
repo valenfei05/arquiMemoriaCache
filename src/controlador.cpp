@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 #include <fstream>
+#include <iomanip>
 
 Controlador::Controlador() : hits(0), Miss(0), totalAccesos(0), ultimoFueHit(false) {
     ram = RAM();
@@ -130,6 +131,13 @@ unsigned char Controlador::procesarEscritura(int direccion, unsigned char dato) 
     for (int i = 0; i < 16; ++i) {
         datosBloque[i] = getRAMValue(baseDireccion + i);
     }
+        // Añade esto después del for que carga datosBloque:
+    cout << "Bloque cargado desde DRAM (direcciones " 
+    << hex << uppercase << baseDireccion << " a " << (baseDireccion + 15) << "): ";
+    for (int i = 0; i < 16; ++i) {
+    cout << setw(2) << setfill('0') << static_cast<int>(datosBloque[i]) << " ";
+    }
+    cout << dec << endl;
 
     datosBloque[offset] = dato;
     via = selectVia(index);
@@ -142,7 +150,7 @@ unsigned char Controlador::procesarEscritura(int direccion, unsigned char dato) 
 void Controlador::mostrarEstadisticas() const {
     double tasaFallos = (totalAccesos > 0) ? (static_cast<double>(Miss) / totalAccesos) * 100.0 : 0.0;
 
-    cout << "\n=== Estadísticas ===" << endl;
+    cout << "\n=== Estadisticas ===" << endl;
     cout << "Total de accesos: " << totalAccesos << endl;
     cout << "Hits: " << hits << endl;
     cout << "Misses: " << Miss << endl;
@@ -170,6 +178,16 @@ void Controlador::mostrarEstadisticas() const {
     }
 }
 
+void Controlador::guardarRAMFinal(const string& nombreArchivo) const {
+    ram.guardarFinal(nombreArchivo);
+}
+
+
+/* void Controlador::imprimirRAM() const {
+    ram.imprimir();
+}
+ */
 bool Controlador::fueUltimoHit() const {
     return ultimoFueHit;
 }
+

@@ -30,6 +30,8 @@ class Controlador {
         int selectVia(int index);
         void setCacheValue(int index, int via, int offset, unsigned char valor);
 
+
+        void validarLRU(int index);
         void increaseHits();
         void increaseMisses();
         void increaseTotalAccesos();
@@ -44,6 +46,10 @@ class Controlador {
 
 
         bool fueUltimoHit() const;
+        void guardarRAMFinal(const string& nombreArchivo) const;
+        
+       // void imprimirRAM() const;
+
     };
 
 

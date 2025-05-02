@@ -15,6 +15,10 @@ class CPU {
         CPU();
         pair<string, pair<int, unsigned char>> generarInstruccionAleatoria();
         void ejecutarInstruccionesAleatorias(int numInstrucciones);
+        //void imprimirRAM() const;
+        void guardarRAMFinal(const string& nombreArchivo) const;
+        
+
 };
 
 #endif

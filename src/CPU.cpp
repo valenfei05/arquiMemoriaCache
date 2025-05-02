@@ -3,16 +3,17 @@
 #include <iostream>
 #include <string>
 #include <fstream> 
+#include <ctime>
 
 CPU::CPU(){
     controlador = Controlador();
+    srand(static_cast<unsigned int>(time(0)));
 }
 
 pair<string, pair<int, unsigned char>> CPU::generarInstruccionAleatoria() {
     string operacion = (rand() % 2 == 0) ? "lectura" : "escritura";
     int direccion = rand() % 2048;
     unsigned char dato = static_cast<unsigned char>(rand() % 256); 
-
     return {operacion, {direccion, dato}};
 }
 
@@ -39,6 +40,9 @@ void CPU::ejecutarInstruccionesAleatorias(int numInstrucciones) {
         }
 
         cout << " --> " << (controlador.fueUltimoHit() ? "HIT" : "MISS") << endl;
+        controlador.mostrarEstadisticas(); 
+
+
         // Calcular tasa de fallos acumulada hasta el acceso actual
         int total = controlador.getTotalAccesos();
         int fallos = controlador.getMisses();
@@ -53,5 +57,15 @@ void CPU::ejecutarInstruccionesAleatorias(int numInstrucciones) {
     }
 
     archivo.close(); 
-    controlador.mostrarEstadisticas();
+    //controlador.mostrarEstadisticas();
 }
+/* 
+void CPU::imprimirRAM() const {
+    controlador.imprimirRAM(); // lo defines tú ahora
+}
+ */
+
+ void CPU::guardarRAMFinal(const string& nombreArchivo) const {
+    controlador.guardarRAMFinal(nombreArchivo);
+}
+
