@@ -17,7 +17,9 @@ class CPU {
         void ejecutarInstruccionesAleatorias(int numInstrucciones);
         //void imprimirRAM() const;
         void guardarRAMFinal(const string& nombreArchivo) const;
-        
+        void leer(int direccion);
+        void escribir(int direccion, const string& dato);
+
 
 };
 

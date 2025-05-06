@@ -4,6 +4,7 @@
 #include <string>
 #include <fstream> 
 #include <ctime>
+#include <sstream>
 
 CPU::CPU(){
     controlador = Controlador();
@@ -69,4 +70,28 @@ void CPU::imprimirRAM() const {
  void CPU::guardarRAMFinal(const string& nombreArchivo) const {
     controlador.guardarRAMFinal(nombreArchivo);
 }
+
+
+void CPU::leer(int direccion) {
+    unsigned char dato = controlador.procesarLectura(direccion);
+    cout << "Lectura de la direccion " << direccion << ": " << static_cast<int>(dato) << endl;
+    cout << " --> " << (controlador.fueUltimoHit() ? "HIT" : "MISS") << endl;
+    controlador.mostrarEstadisticas();
+}
+
+void CPU::escribir(int direccion, const string& dato) {
+    unsigned int valorHex;
+    stringstream ss;
+    ss << hex << dato;
+    ss >> valorHex;
+
+    unsigned char byte = static_cast<unsigned char>(valorHex);
+    controlador.procesarEscritura(direccion, byte);
+
+    cout << "Escritura en la direccion " << direccion << ": " << static_cast<int>(byte) << endl;
+    cout << " --> " << (controlador.fueUltimoHit() ? "HIT" : "MISS") << endl;
+    controlador.mostrarEstadisticas();
+}
+
+
 
