@@ -40,8 +40,8 @@ vector<Instruccion> leerInstruccionesDeArchivo(const string& nombreArchivo) {
 int main() {
     CPU cpu;
     int modo;
-    cout << "Simulación memoria Cache :\n1. Instrucciones aleatorias\n2. Leer instrucciones desde archivo\n";
-    cout << "Seleccione la opción que desea: ";
+    cout << "Simulacion memoria Cache :\n1. Instrucciones aleatorias\n2. Leer instrucciones desde archivo\n";
+    cout << "Seleccione la opcion que desea: ";
     cin >> modo;
 
     if (modo == 1) {

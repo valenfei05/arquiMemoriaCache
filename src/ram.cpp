@@ -34,7 +34,7 @@ unsigned char RAM::leerByte(int direccion) const {
 
 void RAM::escribirByte(int direccion, unsigned char dato) {
     memoria[direccion] = dato;
-    guardar(); 
+    guardarFinal("ram_final.txt"); 
 }
 
 /* void RAM::imprimir() const {
