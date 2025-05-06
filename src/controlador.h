@@ -26,7 +26,7 @@ class Controlador {
 
         unsigned char getRAMValue(int direccion);
         void setRAMValue(int direccion, unsigned char valor);
-        unsigned char getCacheValue(int index, int via, int offset);
+        unsigned char getCacheValue(int index, int via, int offset); 
         int selectVia(int index);
         void setCacheValue(int index, int via, int offset, unsigned char valor);
 

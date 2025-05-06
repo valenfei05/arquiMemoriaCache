@@ -18,6 +18,7 @@ pair<int, pair<int, int>> Controlador::splitAddress(int direccion) {
     int offset = direccion & 0xF;
     int index  = (direccion >> 4) & 0x7;
     int tag    = (direccion >> 7) & 0xF;
+    cout << "Direccion: " << hex << uppercase << direccion << " | Tag: " << tag << " | Index: " << index << " | Offset: " << offset << dec << endl;
     return {tag, {index, offset}}; 
 }
 
@@ -64,8 +65,11 @@ int Controlador::getTotalAccesos() const {
 int Controlador::selectVia(int index) {
     int numVias = cache.getNumVias(index); 
     int via = 0;
-    if (numVias == 4)
+    if (numVias == 4){
+        cout << "\nSeleccionando via LRU para el indice " << index << endl;
         via = cache.getWayLRU(index);
+        cout << "Via seleccionada: " << via << endl;
+    }
     else
         via = numVias;
     return via; 

@@ -46,7 +46,7 @@ unsigned char Conjunto::getValue(int via, int offset) {
         cout << "[ERROR] vía fuera de rango: " << via << endl;
         break
     } */
-    
+    vias[via].setLRU(0);
     return vias[via].leerDato(offset); 
 }
 
@@ -55,7 +55,7 @@ void Conjunto::setValue(int via, int offset, unsigned char valor) {
         cout << "[ERROR] vía fuera de rango: " << via << endl;
         break
     } */
-    
+    vias[via].setLRU(0);
     vias[via].escribirDato(offset, valor); 
 }
 

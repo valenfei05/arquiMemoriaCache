@@ -4,7 +4,7 @@
 #include <iomanip>
 
 RAM::RAM() {
-    memoria.resize(2048); 
+    memoria.resize(2048);
     ifstream infile("ram_data.txt");
 
     if (infile.is_open()) {
@@ -34,6 +34,7 @@ unsigned char RAM::leerByte(int direccion) const {
 
 void RAM::escribirByte(int direccion, unsigned char dato) {
     memoria[direccion] = dato;
+    guardar(); 
 }
 
 /* void RAM::imprimir() const {
@@ -58,8 +59,6 @@ void RAM::guardarFinal(const string& nombreArchivo) const {
         cout << "[ERROR] No se pudo guardar la RAM final." << endl;
     }
 }
-
-
 
 void RAM::guardar() {
     ofstream outfile("ram_data.txt");
